@@ -3,13 +3,19 @@
 STARTS="starts Basic style"
 ENDS="ends Basic style"
 
-all:	goto_test.diff.txt lint
+all:	goto_test.diff.txt lint doxygen
 	@echo "[PASS] Compile/Execute/Compare"
 
 .PHONY:
 clean:
 	@echo "Clean"
 	@rm goto_test.diff.txt goto_test.this.txt goto_test
+
+.PHONY:
+doxygen: goto_test.h.cpp
+	@echo "Doxygen"
+	@doxygen $<
+	@echo "TODO Fix the doxygen warnings"
 
 .PHONY:
 lint: goto_test.h.cpp
