@@ -65,7 +65,7 @@ from types import (MethodType)
 # where imports through __init__.py are improperly handled.
 # pylint disables relative-import and bare-except are required to silence them.
 try:
-    from python_2_7 import (Dict)
+    from Dict import (Dict)
 except:
     try:
         from Dict import (Dict)

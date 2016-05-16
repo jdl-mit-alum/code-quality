@@ -32,7 +32,7 @@ Date: 20160512
 
 from docopt import (docopt)
 
-from python_2_7.Dict import (Dict)
+from Dict.Dict import (Dict)
 
 
 def example(easy, **hard):
