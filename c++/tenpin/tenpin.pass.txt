@@ -1,0 +1,62 @@
+Some tests are pin fall sequences from the URL:
+http://en.wikipedia.org/wiki/Ten-pin_bowling#Scoring
+with scores matching those documented on wikipedia.
+Other tests exercise exception handling.
+
+-------------------------------------------------------------------------
+		Normal behavior: 
+******* game 1: all gutterballs: *********************************************
+   - -   - -   - -   - -   - -   - -   - -   - -   - -   - -   - -
+  0     0     0     0     0     0     0     0     0     0        0
+
+******* test 2: one strike and gutterballs (expect score=10): ****************
+   X     - -   - -   - -   - -   - -   - -   - -   - -   - -   - -
+ 10    10    10    10    10    10    10    10    10    10       10 [PASS]
+
+******* test 3: Perfect game (thanksgiving turkey) (expect score=300): *******
+   X     X     X     X     X     X     X     X     X     X     X X
+ 30    60    90   120   150   180   210   240   270   300      300 [PASS]
+
+******* test 4: wikipedia example 1 (strike) (expect score=28): **************
+   X     3 6   - -   - -   - -   - -   - -   - -   - -   - -   - -
+ 19    28    28    28    28    28    28    28    28    28       28 [PASS]
+
+******* test 5: wikipedia example 2 (double) (expect score=57): **************
+   X     X     9 -   - -   - -   - -   - -   - -   - -   - -   - -
+ 29    48    57    57    57    57    57    57    57    57       57 [PASS]
+
+******* test 6: wikipedia example 3 (turkey or triple) (expect score=78): ****
+   X     X     X     - 9   - -   - -   - -   - -   - -   - -   - -
+ 30    50    69    78    78    78    78    78    78    78       78 [PASS]
+
+******* test 7: wikipedia example 4 (expect score=46): ***********************
+   X     X     4 2   - -   - -   - -   - -   - -   - -   - -   - -
+ 24    40    46    46    46    46    46    46    46    46       46 [PASS]
+
+******* test 8: wikipedia example 5 (spare) (expect score=20): ***************
+   7 /   4 2   - -   - -   - -   - -   - -   - -   - -   - -   - -
+ 14    20    20    20    20    20    20    20    20    20       20 [PASS]
+
+******* test 9: final spare (expect score=277): ******************************
+   X     X     X     X     X     X     X     X     X     7 /   X  
+ 30    60    90   120   150   180   210   237   257   277      277 [PASS]
+
+-------------------------------------------------------------------------
+		Exception and error handling
+******* game 10: too many balls (or frames): *********************************
+Catch: 6. too many frames
+******* game 11: too few balls: **********************************************
+Error: 7. too few balls
+******* game 12: too many pins in frame: *************************************
+Catch: 2. too many pins for standard frame
+******* game 13: >2 balls after final strike: ********************************
+Catch: 4. >2 balls after final strike
+******* game 14: >1 ball after final spare: **********************************
+Catch: 5. >1 ball after final spare
+******* game 15: too many pins for ball: *************************************
+Catch: 1. too many pins for ball
+******* game 16: no pins and no balls: ***************************************
+Error: 7. too few balls
+******* game 17: excess bonus score: *****************************************
+Catch: 1. too many pins for ball
+-------------------------------------------------------------------------
