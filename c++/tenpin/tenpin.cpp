@@ -187,7 +187,7 @@ using std::setw;
 using std::string;
 using std::stringstream;
 
-// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /// ctor allocates storage and initializes values needed to start game.
 cPlayer::cPlayer(const size_t num, const string &doc, const size_t expect)
   :
@@ -212,13 +212,13 @@ cPlayer::cPlayer(const size_t num, const string &doc, const size_t expect)
     cout << ss.str() << string(70 - ss.str().size(), '*');
 }
 
-// --------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 /// dtor shows score when no failure has occurred
 cPlayer::~cPlayer() {
     if (!fail_) cout << *this;
 }
 
-// ()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+// ()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
 /// ftor accepts pinfall counts and stores them into the player structure.
 cPlayer &cPlayer::operator()(const size_t pins) {
     if (pins > 10) {
@@ -264,7 +264,7 @@ cPlayer &cPlayer::operator()(const size_t pins) {
 }
 
 /// display computes the score and outputs it to the arg stream
-ostream &cPlayer::display(ostream &o) {  // _________________________________
+ostream &cPlayer::display(ostream &o) {  // ___________________________________
     if (round_ < 10u) {
         o << endl << "Error: 7. too few balls" << endl;
     } else {
@@ -342,13 +342,13 @@ ostream &cPlayer::display(ostream &o) {  // _________________________________
 }
 
 /// friend operator<< simplifies output of a player structure.
-ostream &operator<<(ostream &o, cPlayer &player) {  // <<<<<<<<<<<<<<<<<<<<<<
+ostream &operator<<(ostream &o, cPlayer &player) {  // <<<<<<<<<<<<<<<<<<<<<<<<
     player.display(o);
     return o;
 }
 
 /// unitTests scores various normal and pathological data.
-void unitTests() {  // ttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+void unitTests() {  // tttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     cout <<
         "Some tests are pin fall sequences from the URL:" << endl <<
         "http://en.wikipedia.org/wiki/Ten-pin_bowling#Scoring" << endl <<
@@ -390,33 +390,33 @@ void unitTests() {  // ttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     cout << "\t\tException and error handling" << endl;
 
     cUnitTest(10, "too many balls (or frames)", 0) =
-        7, 3, 4, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;  // 6
+        7, 3, 4, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;  //   6
 
     cUnitTest(11, "too few balls", 0) =
-        7, 3, 4, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;        // 7
+        7, 3, 4, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;        //   7
 
     cUnitTest(12, "too many pins in frame", 0) =
-        7, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;     // 2
+        7, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;     //   2
 
     cUnitTest(13, ">2 balls after final strike", 0) =
-        X, X, X, X, X, X, X, X, X, X, X, X, X;                          // 4
+        X, X, X, X, X, X, X, X, X, X, X, X, X;                          //   4
 
     cUnitTest(14, ">1 ball after final spare", 0) =
-        X, X, X, X, X, X, X, X, X, 7, 3, X, X;                          // 5
+        X, X, X, X, X, X, X, X, X, 7, 3, X, X;                          //   5
 
     cUnitTest(15, "too many pins for ball", 0) =
-        11, X, X, X, X, X, X, X, X, X, X, X, X;                         // 1
+        11, X, X, X, X, X, X, X, X, X, X, X, X;                         //   1
 
     cUnitTest(16, "no pins and no balls", 0);                           // e 7
 
     cUnitTest(17, "excess bonus score", 0) =
-        X, X, X, X, X, X, X, X, X, X, X, 11;                  // 3 (actually 1)
+        X, X, X, X, X, X, X, X, X, X, X, 11;                 // 3 (actually 1)
 
     cout << string(73, '-') << endl;
 }
 }  // namespace nTenPin
 
-int main(int argc, char **argv) {  //*****************************************
+int main(int argc, char **argv) {  //******************************************
     using std::cerr;
     using std::stringstream;
     using std::string;
@@ -436,6 +436,6 @@ int main(int argc, char **argv) {  //*****************************************
     return ret;
 }
 
-// *****************************************************************************
+// ****************************************************************************
 /// tenpin.cpp <EOF>
-// *****************************************************************************
+// ****************************************************************************
