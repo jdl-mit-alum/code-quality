@@ -11,14 +11,15 @@ all: coverage $(MODULE).diff.txt lint doxygen
 .PHONY:
 clean:
 	@echo "Clean"
-	@rm -f $(MODULE) $(MODULE).this.txt $(MODULE).diff.txt
+	@rm -f $(MODULE).this.txt $(MODULE).diff.txt
+	@rm -f $(MODULE) $(MODULE).coverage $(MODULE).doxygen.txt
 	@rm -f *.gcov *.gcda *.gcno *.lint
 
 .PHONY:
-doxygen: $(MODULE).cpp
+doxygen: $(MODULE).doxygen.config $(MODULE).cpp
 	@echo "Doxygen"
-	@doxygen $<
-	@echo "TODO Fix the doxygen warnings"
+	@doxygen $< > $(MODULE).doxygen.txt 2>&1
+	@echo "[TODO] Fix the doxygen warnings"
 
 .PHONY:
 coverage: $(MODULE).cpp

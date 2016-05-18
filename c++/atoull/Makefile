@@ -19,7 +19,7 @@ clean:
 doxygen: $(MODULE).doxygen.config $(MODULE).h.cpp
 	@echo "Doxygen"
 	@doxygen $< > $(MODULE).doxygen.txt 2>&1
-	@echo "TODO Fix the doxygen warnings"
+	@echo "[TODO] Fix the doxygen warnings"
 
 .PHONY:
 coverage: $(MODULE).h.cpp
