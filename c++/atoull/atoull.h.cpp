@@ -1,55 +1,55 @@
-///////////////////////////////////////////////////////////////////////////////
-/// @file goto_test.h.cpp
-/// Copyright(c) 2008-2016 Jonathan D. Lettvin, All Rights Reserved
-/// @author Jonathan D. Lettvin
-/// @date 20080505
-/// @brief read numerical text data with optimization and error-handling.
-///        Implement mathematically provable perfect implementations of
-///        high-speed data lexers for all possible text lexemes.
-///        Test edge-cases with built-in unit tests.
-/// Updated 20160515 to remove new warnings and clarify Alternates.
-/// This code assumes 8-bit bytes.
-///////////////////////////////////////////////////////////////////////////////
-///   COMPILATION: (Express built-in unit-tests)
-/// g++ -Wall -DLETTVIN_LEXERS_H_CPP_UNIT -o goto_test goto_test.h.cpp
-///////////////////////////////////////////////////////////////////////////////
-///   EXAMPLE USAGE: (fixed specified width lexer)
-///
-/// char source[ ] = "1234";
-/// char *s = source;
-/// unsigned long long error, target;
-///
-/// target = Lettvin::lexDecU64_Instance( s, target, error, digits );
-/// target = Lettvin::lexDecU64_Instance( s, target, error, digits, hi );
-/// target = Lettvin::lexDecU64_Instance( s, target, error, digits, hi, lo );
-///
-/// where digits is the number of digits to process.
-/// where hi and lo are the highest and lowest permitted value.
-/// where s changes to point into source immediately following non-error input.
-/// where error is a flag indicating error.
-/// If error is already set, no lexing is done.
-/// If lexed number falls outside hi lo range, s is unchanged.
-/// See UnitTest examples below for edge case analysis.
-///////////////////////////////////////////////////////////////////////////////
-///   METHODS:
-/// Pass/return reference prevents data copying and stack construction cost.
-/// Jump table eliminates typical switch case cost.
-/// JIT (Just-In-Time) jump table filling for first-time cost only.
-/// Jcond use designed to have 0 clock cost due to locality and UV pipes.
-/// Prefilled data tables enabling column summing with minimum cost.
-///////////////////////////////////////////////////////////////////////////////
-///   RESTRICTIONS:
-/// Jump table implementation is dependent on g++ syntax/semantics.
-///////////////////////////////////////////////////////////////////////////////
-///   IMPLEMENTED:
-/// lexDecU64t: decimal representation into unsigned long long
-///////////////////////////////////////////////////////////////////////////////
-/// @mainpage Unsigned long long high performance lexer using computed goto.
-///////////////////////////////////////////////////////////////////////////////
-#if 0
-/* EXPECTED OUTPUT:
-///////////////////////////////////////////////////////////////////////////////
-goto_test.h.cpp May  8 2008 10:41:59 UNIT TEST: starts Alternate style
+/** \file atoull.h.cpp
+ * Copyright(c) 2008-2016 Jonathan D. Lettvin, All Rights Reserved
+ * \author Jonathan D. Lettvin
+ * \date 20080505
+ * \brief read numerical text data with optimization and error-handling.
+ *
+ * Implement mathematically provable perfect implementations of
+ * high-speed data lexers for all possible text lexemes.
+ * Test edge-cases with built-in unit tests.
+ * Updated 20160518 to remove new warnings and clarify Alternates.
+ * This code assumes 8-bit bytes.
+ * _____________________________________________________________________________
+ * COMPILATION: (Express built-in unit-tests)
+ * g++ -std=c++11 -Wall -DLETTVIN_LEXERS_H_CPP_UNIT -o atoull atoull.h.cpp
+ * _____________________________________________________________________________
+ * EXAMPLE USAGE: (fixed specified width lexer)
+ * 
+ * char source[ ] = "1234";
+ * char *s = source;
+ * unsigned long long error, target;
+ * 
+ * target = Lettvin::lexDecU64_Instance( s, target, error, digits );
+ * target = Lettvin::lexDecU64_Instance( s, target, error, digits, hi );
+ * target = Lettvin::lexDecU64_Instance( s, target, error, digits, hi, lo );
+ * 
+ * where digits is the number of digits to process.
+ * where hi and lo are the highest and lowest permitted value.
+ * where s changes to point into source immediately following non-error input.
+ * where error is a flag indicating error.
+ * If error is already set, no lexing is done.
+ * If lexed number falls outside hi lo range, s is unchanged.
+ * See UnitTest examples below for edge case analysis.
+ * _____________________________________________________________________________
+ * METHODS:
+ * Pass/return reference prevents data copying and stack construction cost.
+ * Jump table eliminates typical switch case cost.
+ * JIT (Just-In-Time) jump table filling for first-time cost only.
+ * Jcond use designed to have 0 clock cost due to locality and UV pipes.
+ * Prefilled data tables enabling column summing with minimum cost.
+ * _____________________________________________________________________________
+ * RESTRICTIONS:
+ * Jump table implementation is dependent on g++ syntax/semantics.
+ * _____________________________________________________________________________
+ * IMPLEMENTED:
+ * lexDecU64t: decimal representation into unsigned long long
+ * _____________________________________________________________________________
+ * \mainpage Unsigned long long high performance lexer using computed goto.
+ * _____________________________________________________________________________
+ */
+// http://en.cppreference.com/w/cpp/language/string_literal
+static const char expected_output[] =
+R"expect(atoull.h.cpp May  8 2008 10:41:59 UNIT TEST: starts Alternate style
 Lettvin::u08t  1 ==  1
 Lettvin::s08t  1 ==  1
 Lettvin::u16t  2 ==  2
@@ -61,7 +61,7 @@ Lettvin::u64t  8 ==  8
 Lettvin::s64t  8 ==  8
 Lettvin::f64t  8 ==  8
                    IN                  BAD                  OUT  N E
-                    0                               42951965936  1 0
+                    0                                         0  1 0
                     1                                         1  1 0
                     2                                         2  1 0
                    10                                        10  2 0
@@ -95,18 +95,19 @@ Illegal request for digit count == 0
                     0                                         0  1 0
  18446744073709551615                      18446744073709551615 20 0
                     0                                         0  1 0
-lexers.h.cpp May  8 2008 10:41:59 UNIT TEST: ends Alternate style
+atoull.h.cpp May  8 2008 10:41:59 UNIT TEST: ends Alternate style
+)expect";
 ///////////////////////////////////////////////////////////////////////////////
-*/
-#endif
 
-#define Alternate 0  ///< Identical logic, different appearance.
+#define Alternate 1  ///< Identical logic, different appearance.
 
+/// @brief File guard
 #ifndef LETTVIN_LEXERS_H_CPP
 #define LETTVIN_LEXERS_H_CPP
 
 #include <iostream>
 #include <sstream>
+#include <fstream>
 #include <string>
 #include <iomanip>
 #include <exception>
@@ -114,9 +115,11 @@ lexers.h.cpp May  8 2008 10:41:59 UNIT TEST: ends Alternate style
 
 namespace Lettvin {
 
+/// @brief Specialized local typedefs
 #ifndef LETTVIN_TYPES
 #define LETTVIN_TYPES
     /// @brief Types to support coding conventions/simplified param passing.
+    ///
     ///        The regularity of the naming convention aids in quick analysis.
     ///        These types should be moved to a file.  Perhaps LettvinTypes.h
     ///        u =  unsigned
@@ -170,6 +173,8 @@ namespace Lettvin {
     std::endl; \
     if (sizeof(Lettvin::b##w##t) != (w/8)) \
     throw("Size expectation violated.");
+
+    /// @brief Test to confirm that data sizes are as expected.
 #define CONFIRM_DATA_SIZES \
     CONFIRM_DATA_SIZE(u0, 8, t) \
     CONFIRM_DATA_SIZE(s0, 8, t) \
@@ -383,7 +388,7 @@ fill:
                     const u64t hi = top,
                     const u64t lo = zip ) {
                 u64t error = zip;
-                u64t ull;
+                u64t ull = 0ULL;
                 char buffer[32];
                 strcpy(buffer, s);  // NOLINT
                 char *t = buffer;
@@ -633,6 +638,11 @@ int main(int argc, char *argv[]) {
   int retval = 1;
   const char *whoami = __FILE__ " " __DATE__ " " __TIME__ " ";
 
+  std::ofstream expected_file("atoull.pass.txt");
+  expected_file << expected_output;
+  expected_file.close();
+
+
   std::cout <<
     whoami <<
     "UNIT TEST: starts " <<
@@ -711,5 +721,5 @@ int main(int argc, char *argv[]) {
 #endif  // LETTVIN_LEXERS_H_CPP_UNIT
 #endif  // LETTVIN_LEXERS_H_CPP
 /// ***************************************************************************
-/// goto_test.h.cpp EOF
+/// atoull.h.cpp EOF
 /// ***************************************************************************
