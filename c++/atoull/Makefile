@@ -6,6 +6,7 @@ COPTS=-std=c++11 -Wall -DLETTVIN_LEXERS_H_CPP_UNIT
 all:	coverage $(MODULE).diff.txt lint doxygen
 	@echo "[PASS] Compile/Execute/Compare"
 	@echo "[TODO] use prof or gprof"
+	@echo "[TODO] use valgrind"
 
 .PHONY:
 clean:
