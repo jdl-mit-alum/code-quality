@@ -2,8 +2,6 @@
 
 MODULE=atoull
 COPTS=-std=c++11 -Wall -DLETTVIN_LEXERS_H_CPP_UNIT 
-STARTS="starts Basic style"
-ENDS="ends Basic style"
 
 all:	coverage $(MODULE).diff.txt lint doxygen
 	@echo "[PASS] Compile/Execute/Compare"
@@ -39,7 +37,7 @@ $(MODULE).diff.txt: $(MODULE).this.txt $(MODULE).pass.txt
 
 $(MODULE).this.txt:	$(MODULE)
 	@echo "Execute $@"
-	@./$< | grep -v $(STARTS) | grep -v $(ENDS) > $@
+	@./$< > $@
 
 $(MODULE):	$(MODULE).h.cpp
 	@echo "Compile $@"
