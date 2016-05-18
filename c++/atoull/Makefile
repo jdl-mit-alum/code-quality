@@ -16,9 +16,9 @@ clean:
 	@rm -f *.gcov *.gcda *.gcno *.lint
 
 .PHONY:
-doxygen: $(MODULE).doxygen.config $(MODULE).h.cpp
+doxygen: Doxyfile $(MODULE).h.cpp
 	@echo "Doxygen"
-	@doxygen $< > $(MODULE).doxygen.txt 2>&1
+	@doxygen > $(MODULE).doxygen.txt 2>&1
 	@echo "[TODO] Fix the doxygen warnings"
 
 .PHONY:
