@@ -1,0 +1,33 @@
+{
+   libobjc_management
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc_zone_malloc
+   fun:_objc_copyClassNamesForImage
+   fun:_ZL9protocolsv
+   fun:_Z9readClassP10objc_classbb
+   fun:gc_init
+   fun:_ZL33objc_initializeClassPair_internalP10objc_classPKcS0_S0_
+   fun:layout_string_create
+   fun:_ZL12realizeClassP10objc_class
+   fun:_ZL22copySwiftV1MangledNamePKcb
+   fun:_ZL22copySwiftV1MangledNamePKcb
+   fun:_ZL22copySwiftV1MangledNamePKcb
+   fun:_ZL22copySwiftV1MangledNamePKcb
+}
+{
+   stdout_buffer
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:__smakebuf
+   fun:__swsetup
+   fun:__sfvwrite
+   fun:fwrite
+   fun:_ZNSt3__111__stdoutbufIcE8overflowEi
+   fun:_ZNSt3__115basic_streambufIcNS_11char_traitsIcEEE6xsputnEPKcl
+   fun:_ZNSt3__116__pad_and_outputIcNS_11char_traitsIcEEEENS_19ostreambuf_iteratorIT_T0_EES6_PKS4_S8_S8_RNS_8ios_baseES4_
+   fun:_ZNSt3__124__put_character_sequenceIcNS_11char_traitsIcEEEERNS_13basic_ostreamIT_T0_EES7_PKS4_m
+   fun:_ZNSt3__1lsINS_11char_traitsIcEEEERNS_13basic_ostreamIcT_EES6_PKc
+   fun:main
+}

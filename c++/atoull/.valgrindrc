@@ -1,0 +1,5 @@
+--memcheck:leak-check=full
+--show-leak-kinds=all
+--error-limit=no
+--gen-suppressions=all
+--log-file=atoull.valgrind
