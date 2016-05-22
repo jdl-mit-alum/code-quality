@@ -2,16 +2,13 @@
 
 MODULE=atoull
 COPTS=-std=c++11 -g -Wall -DLETTVIN_LEXERS_H_CPP_UNIT 
-STEPS=0
 
 all:	before coverage $(MODULE).diff.txt valgrind lint doxygen after
 	@echo "[PASS] Compile/Execute/Compare"
-	@echo "$(STEPS) steps finished"
 
 .PHONY:
 clean:
 	@echo "\tMakefile: clean (removing files not members of deliverables)"
-	@export STEPS="$(STEPS) + 1" | bc
 	@rm -f $(MODULE).diff.txt $(MODULE).this.txt $(MODULE).pass.txt
 	@rm -f $(MODULE) $(MODULE).coverage $(MODULE).doxygen.txt
 	@rm -f *.gcov *.gcda *.gcno *.lint *.log *valgrind*
