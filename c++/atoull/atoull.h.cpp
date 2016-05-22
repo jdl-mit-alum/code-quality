@@ -9,9 +9,19 @@
  * Test edge-cases with built-in unit tests.
  * Updated 20160518 to remove new warnings and clarify Alternates.
  * This code assumes 8-bit bytes.
+ *
+ * _____________________________________________________________________________
+ * CODING STANDARD: https://google.github.io/styleguide/cppguide.html
+ * google c++ style guide
  * _____________________________________________________________________________
  * COMPILATION: (Express built-in unit-tests)
  * g++ -std=c++11 -Wall -DLETTVIN_LEXERS_H_CPP_UNIT -o atoull atoull.h.cpp
+ * _____________________________________________________________________________
+ * TESTING: (Run the unit tests)
+ * ./atoull
+ * _____________________________________________________________________________
+ * NORMAL USE:
+ * g++ -std=c++11 -Wall -o client client.cpp atoull.h.cpp
  * _____________________________________________________________________________
  * EXAMPLE USAGE: (fixed specified width lexer)
  * 
