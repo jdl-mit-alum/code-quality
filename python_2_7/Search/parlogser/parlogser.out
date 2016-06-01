@@ -1,0 +1,25 @@
+from json
+--------------------------------------------------
+              Anch        0   ranch             
+              ncho        1   nacho             
+             nchor        1   anchor            
+               llo        9   lo                
+              ehll       13   hell              
+             ehllo       13   hello             
+              hllo       14   hello             
+               llo       15   lo                
+              EHLL       22   hell              
+             EHLLo       22   hello             
+              HLLo       23   hello             
+               LLo       24   lo                
+            ipster       29   tipster           
+              pste       30   paste             
+                IH       36   hi                
+            heello       39   hello             
+               llo       42   lo                
+             helll       46   hell              
+            helllo       46   hello             
+              elll       47   ell               
+               llo       49   lo                
+            helloo       53   hello             
+               llo       55   lo                

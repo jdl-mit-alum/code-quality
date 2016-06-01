@@ -1,0 +1,38 @@
+Hi Steve Hanov,
+
+I enjoyed reading your blog
+http://stevehanov.ca/blog/index.php?id=123
+Gregory criticized your implementation over endian problems.
+I decided to show you my technique to make endianness irrelevant.
+
+It was originally an answer to a stackflow question.
+http://stackoverflow.com/questions/35555869/c11-endian-conversion/35821351
+
+In short, to deal with graphic memory endianness
+all you need is to extract offsets from a special manifest constant 0x03020100.
+
+# As a comprehension
+[R, G, B, A] = [(0x03020100>>shift)&0xff for shift in [0x00, 0x08, 0x10, 0x18]
+
+# As individual calculations
+R = (0x03020100 >> 0x00) & 0xff
+G = (0x03020100 >> 0x08) & 0xff
+B = (0x03020100 >> 0x10) & 0xff
+A = (0x03020100 >> 0x18) & 0xff
+
+This technique can also be used when loading data from files.
+If you know the endianness of the file,
+your code can be invariant of platform when loading it.
+I used something of this sort to solve the problem of
+choosing the appropriate lexer for XML base on its BOM (Byte Order Mark).
+
+You also mentioned memory leaks.
+I highly recommend you look into valgrind.
+It will report memory leaks without
+re-implementing malloc/free.
+
+My main interest in your blog page is that I have a need for
+a memory mapped data structure that does not have performance decrease
+over the native data structure in Python.
+
+If you have done any more work on this, I'd like to know.
